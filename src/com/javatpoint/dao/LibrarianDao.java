@@ -23,7 +23,7 @@ public class LibrarianDao {
 		Session session = DB.sf.openSession();
 		Transaction transaction = null;
 		try{
-	//Hibernate session code
+	//Hibernate session code this is updtaed one for git.
 			transaction = session.beginTransaction();
 			session.save(bean);
 			transaction.commit();
