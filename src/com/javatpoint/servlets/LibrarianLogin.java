@@ -13,8 +13,10 @@ import javax.servlet.http.HttpSession;
 
 import com.javatpoint.dao.LibrarianDao;
 @WebServlet("/LibrarianLogin")
-public class LibrarianLogin extends HttpServlet {
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+public class LibrarianLogin extends HttpServlet 
+{
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
 		response.setContentType("text/html");
 		PrintWriter out=response.getWriter();
 		
@@ -49,5 +51,4 @@ public class LibrarianLogin extends HttpServlet {
 		request.getRequestDispatcher("footer.html").include(request, response);
 		out.close();
 	}
-
 }

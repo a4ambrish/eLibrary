@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,7 +16,8 @@ import com.javatpoint.beans.LibrarianBean;
 import com.javatpoint.dao.LibrarianDao;
 @WebServlet("/ViewLibrarian")
 public class ViewLibrarian extends HttpServlet {
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+throws ServletException, IOException {
 		response.setContentType("text/html");
 		PrintWriter out=response.getWriter();
 		
@@ -28,14 +30,26 @@ public class ViewLibrarian extends HttpServlet {
 		out.println("<body>");
 		
 		request.getRequestDispatcher("navadmin.html").include(request, response);
+		request.getRequestDispatcher("SearchLibrarianForm.html").include(request, response);
+		//int id=Integer.parseInt(request.getParameter("id"));
+		//LibrarianBean viewbyid=LibrarianDao.viewById(id);
+		//request.setAttribute("id",id);
+		//RequestDispatcher rd = request.getRequestDispatcher("SearchLibarian");
+		//rd.forward(request,response);
+
+
 		out.println("<div class='container'>");
-		
+out.println("<div class='form-group'");	
 		List<LibrarianBean> list=LibrarianDao.view();
-		
+		out.println("</div>");
+out.println("<h3><center>List of registered Librarians</center></h3>");
 		out.println("<table class='table table-bordered table-striped'>");
 		out.println("<tr><th>Id</th><th>Name</th><th>Email</th><th>Password</th><th>Mobile</th><th>Edit</th><th>Delete</th></tr>");
 		for(LibrarianBean bean:list){
 			out.println("<tr><td>"+bean.getId()+"</td><td>"+bean.getName()+"</td><td>"+bean.getEmail()+"</td><td>"+bean.getPassword()+"</td><td>"+bean.getMobile()+"</td><td><a href='EditLibrarianForm?id="+bean.getId()+"'>Edit</a></td><td><a href='DeleteLibrarian?id="+bean.getId()+"'>Delete</a></td></tr>");
+		
+		System.out.println("Sout,"+"getID");
+		
 		}
 		out.println("</table>");
 		

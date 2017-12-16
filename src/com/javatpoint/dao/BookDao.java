@@ -6,6 +6,10 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import com.javatpoint.beans.BookBean;
 import com.javatpoint.beans.IssueBookBean;
 import com.javatpoint.beans.LibrarianBean;
@@ -14,8 +18,29 @@ public class BookDao {
 
 	public static int save(BookBean bean){
 		int status=0;
-		// 111
-		try{
+	
+			Session session = DB.sf.openSession();
+			Transaction transaction = null;
+			try
+			{
+		//Hibernate session code this is updated one for git.
+				transaction = session.beginTransaction();
+				session.save(bean);
+				transaction.commit();
+				status=1;
+				System.out.println("Records inserted sucessessfully");
+			}
+			catch (HibernateException e)
+			{
+				transaction.rollback();
+				e.printStackTrace();
+			}
+			finally 
+			{
+				session.close();
+			}
+		return status;
+		/*try{
 			Connection con=DB.getCon();
 			PreparedStatement ps=con.prepareStatement("insert into e_book values(?,?,?,?,?,?)");
 			ps.setString(1,bean.getCallno());
@@ -29,7 +54,7 @@ public class BookDao {
 			
 		}catch(Exception e){System.out.println(e);}
 		
-		return status;
+		return status;*/
 	}
 	public static List<BookBean> view(){
 		List<BookBean> list=new ArrayList<BookBean>();

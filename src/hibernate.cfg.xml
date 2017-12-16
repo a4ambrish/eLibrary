@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!DOCTYPE hibernate-configuration PUBLIC
-"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<!--  <!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">-->
+<!DOCTYPE hibernate-configuration SYSTEM
+	"classpath://org/hibernate/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
  <session-factory>
   <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
@@ -12,7 +13,9 @@
   <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
   <property name="hibernate.default_schema">public</property>
   <property name="show_sql">true</property>
-  <property name="hbm2ddl.auto">validate</property>
+ <!--  <property name="hbm2ddl.auto">validate</property> -->
 <mapping class="com.javatpoint.beans.LibrarianBean"/>
+<mapping class="com.javatpoint.beans.BookBean"/>
+<mapping class="com.javatpoint.beans.IssueBookBean"/>
 </session-factory>
 </hibernate-configuration>

@@ -22,7 +22,7 @@ public class EditLibrarian extends HttpServlet {
 		String password=request.getParameter("password");
 		String smobile=request.getParameter("mobile");
 		
-		LibrarianBean bean=new LibrarianBean(id,name, email, password, smobile);
+		LibrarianBean bean=new LibrarianBean(id, name, email, password, smobile);
 		LibrarianDao.update(bean);
 		response.sendRedirect("ViewLibrarian");
 	}
