@@ -4,9 +4,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -58,7 +60,37 @@ public class BookDao {
 	}
 	public static List<BookBean> view(){
 		List<BookBean> list=new ArrayList<BookBean>();
-		try{
+
+		Session session = DB.sf.openSession();
+		Transaction transaction = null;
+		try {
+		transaction = session.beginTransaction();
+		List bookbean =session.createQuery("from BookBean").list();
+		
+	for (Iterator iterator = bookbean.iterator(); iterator.hasNext();)
+		{
+		BookBean bean = (BookBean) iterator.next();
+		System.out.println("Retrieving Librarian details: ");
+		System.out.println(bean.getCallno() + "  "
+				+ bean.getName() + "  " + bean.getAuthor()
+		+ "   " + bean.getPublisher()+" "+bean.getQuantity()+" "+bean.getIssued());
+		list.add(bean);
+		}
+		transaction.commit();
+		} catch (HibernateException e)
+		{
+		transaction.rollback();
+		e.printStackTrace();
+		} 
+		finally 
+		{
+		session.close();
+		}
+
+		return list;
+
+		
+		/*try{
 			Connection con=DB.getCon();
 			PreparedStatement ps=con.prepareStatement("select * from e_book");
 			ResultSet rs=ps.executeQuery();
@@ -77,11 +109,38 @@ public class BookDao {
 			
 		}catch(Exception e){System.out.println(e);}
 		
-		return list;
+		return list;*/
 	}
 	public static int delete(String callno){
 		int status=0;
-		try{
+		Session session = DB.sf.openSession();
+		Transaction transaction = null;
+		
+		try {
+		transaction = session.beginTransaction();
+		String queryString = "from BookBean where callno= :callno";
+		Query query = session.createQuery(queryString);
+		query.setString("callno", callno);
+        BookBean bean =(BookBean)query.uniqueResult();
+		session.delete(bean);
+		status=1;
+		transaction.commit();
+		System.out.println("Book records deleted!");
+		} catch (HibernateException e) {
+
+		transaction.rollback();
+
+		e.printStackTrace();
+
+		} finally 
+		{
+
+		session.close();
+		}
+		return status;
+		
+
+		/*try{
 			Connection con=DB.getCon();
 			PreparedStatement ps=con.prepareStatement("delete from e_book where callno=?");
 			ps.setString(1,callno);
@@ -90,11 +149,34 @@ public class BookDao {
 			
 		}catch(Exception e){System.out.println(e);}
 		
-		return status;
+		return status;*/
 	}
 	public static int getIssued(String callno){
 		int issued=0;
-		try{
+		Session session = DB.sf.openSession();
+		Transaction transaction = null;
+		BookBean bean = new BookBean();
+	try{
+		transaction = session.beginTransaction();
+		
+		bean=(BookBean)session.get(BookBean.class,callno);
+issued=bean.getIssued();
+		System.out.println(bean.getIssued());
+	transaction.commit();
+
+		}
+	catch(HibernateException e) 
+	{
+	transaction.rollback();
+	e.printStackTrace();
+	} 
+	
+	finally {
+	session.close();
+	}
+	return issued;
+
+		/*try{
 			Connection con=DB.getCon();
 			PreparedStatement ps=con.prepareStatement("select * from e_book where callno=?");
 			ps.setString(1,callno);
@@ -106,11 +188,39 @@ public class BookDao {
 			
 		}catch(Exception e){System.out.println(e);}
 		
-		return issued;
+		return issued;*/
 	}
 	public static boolean checkIssue(String callno){
 		boolean status=false;
-		try{
+		Session session = DB.sf.openSession();
+		Transaction transaction = null;
+		BookBean bean = new BookBean();
+	
+	try{
+		transaction = session.beginTransaction();
+		
+		String queryString = "from BookBean where callno= :callno and quantity> :issued";
+		Query query = session.createQuery(queryString);
+		query.setString("callno", callno);
+		query.setInteger("issued", bean.getIssued());
+		BookBean beans =(BookBean)query.uniqueResult();
+		beans=(BookBean)session.get(BookBean.class,callno);
+status=
+		System.out.println(bean.getIssued());
+	transaction.commit();
+
+		}
+	catch(HibernateException e) 
+	{
+	transaction.rollback();
+	e.printStackTrace();
+	} 
+	
+	finally {
+	session.close();
+	}
+	return issued;
+		/*try{
 			Connection con=DB.getCon();
 			PreparedStatement ps=con.prepareStatement("select * from e_book where callno=? and quantity>issued");
 			ps.setString(1,callno);
@@ -122,7 +232,7 @@ public class BookDao {
 			
 		}catch(Exception e){System.out.println(e);}
 		
-		return status;
+		return status;*/
 	}
 	public static int issueBook(IssueBookBean bean){
 		String callno=bean.getCallno();

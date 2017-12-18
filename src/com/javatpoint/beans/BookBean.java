@@ -36,35 +36,35 @@ public String getCallno() {
 public void setCallno(String callno) {
 	this.callno = callno;
 }
-@Column( unique = true, nullable = false, precision = 5, scale = 0)
+@Column(nullable = false)
 public String getName() {
 	return name;
 }
 public void setName(String name) {
 	this.name = name;
 }
-@Column( unique = true, nullable = false, precision = 5, scale = 0)
+@Column(nullable = false)
 public String getAuthor() {
 	return author;
 }
 public void setAuthor(String author) {
 	this.author = author;
 }
-@Column( unique = true, nullable = false, precision = 5, scale = 0)
+@Column(nullable = false)
 public String getPublisher() {
 	return publisher;
 }
 public void setPublisher(String publisher) {
 	this.publisher = publisher;
 }
-@Column( unique = true, nullable = false, precision = 5, scale = 0)
+@Column(nullable = false)
 public int getQuantity() {
 	return quantity;
 }
 public void setQuantity(int quantity) {
 	this.quantity = quantity;
 }
-@Column( unique = true, nullable = false, precision = 5, scale = 0)
+@Column(nullable = false)
 public int getIssued() {
 	return issued;
 }

@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Table(name="e_issuebook")
 
 public class IssueBookBean implements Serializable {
-private static final String  = null;
+//private static final String  = null;
 private String callno,studentid,studentname;
 private long studentmobile;
 private Date issueddate;

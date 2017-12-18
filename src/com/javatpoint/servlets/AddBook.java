@@ -33,7 +33,11 @@ public class AddBook extends HttpServlet {
 		String publisher=request.getParameter("publisher");
 		String squantity=request.getParameter("quantity");
 		int quantity=Integer.parseInt(squantity);
+		
+		
 		BookBean bean=new BookBean(callno,name,author,publisher,quantity);
+		bean.setIssued(0);
+				
 		int i=BookDao.save(bean);
 		if(i>0){
 			out.println("<h3>Book saved successfully</h3>");

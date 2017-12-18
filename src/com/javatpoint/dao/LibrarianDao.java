@@ -225,7 +225,7 @@ public class LibrarianDao {
 		session.delete(bean);
 		status=1;
 		transaction.commit();
-		System.out.println("Employee records deleted!");
+		System.out.println("Librarian records deleted!");
 		} catch (HibernateException e) {
 
 		transaction.rollback();
