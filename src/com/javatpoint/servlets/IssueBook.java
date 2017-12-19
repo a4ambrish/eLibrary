@@ -3,6 +3,7 @@ package com.javatpoint.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.javatpoint.beans.BookBean;
 import com.javatpoint.beans.IssueBookBean;
 import com.javatpoint.dao.BookDao;
+import com.javatpoint.dao.DBConstants;
 @WebServlet("/IssueBook")
 public class IssueBook extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -36,6 +38,8 @@ public class IssueBook extends HttpServlet {
 		long studentmobile=Long.parseLong(sstudentmobile);
 		
 		IssueBookBean bean=new IssueBookBean(callno,studentid,studentname,studentmobile);
+		bean.setReturnstatus(DBConstants.BOOK_ISSUE_STATUS_No);
+		bean.setIssueddate(new Date());
 		int i=BookDao.issueBook(bean);
 		if(i>0){
 			out.println("<h3>Book issued successfully</h3>");

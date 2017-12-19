@@ -17,5 +17,6 @@
 <mapping class="com.javatpoint.beans.LibrarianBean"/>
 <mapping class="com.javatpoint.beans.BookBean"/>
 <mapping class="com.javatpoint.beans.IssueBookBean"/>
+<mapping class="com.javatpoint.beans.ReturnIssueBookBean"/>
 </session-factory>
 </hibernate-configuration>
